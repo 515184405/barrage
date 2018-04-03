@@ -33,7 +33,7 @@
 		M.timer = null; 
 		var createView = function(){
 			var randomIndex = Math.floor(Math.random() * M.bgColors.length);
-			var ele = $('<a class="overflow-text" target="_blank" style="text-align:'+settings.direction.split(/\s+/)[1]+';float:'+settings.direction.split(/\s+/)[1]+';background-color:'+M.bgColors[randomIndex]+'"; href="'+(Obj.data[0].href ? Obj.data[0].href : "javascript:;")+'">'+Obj.data[0].text+'</a>');
+			var ele = $('<a class="overflow-text" target="_blank" style="opacity:0;text-align:'+settings.direction.split(/\s+/)[1]+';float:'+settings.direction.split(/\s+/)[1]+';background-color:'+M.bgColors[randomIndex]+'"; href="'+(Obj.data[0].href ? Obj.data[0].href : "javascript:;")+'">'+Obj.data[0].text+'</a>');
 			var str = Obj.data.shift();
 			if(M.vertical  == 'top'){
 				ele.animate({
