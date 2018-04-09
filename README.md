@@ -22,6 +22,7 @@ data为数据，数据格式可调换，更改数据格式时，记得去改源�
           gap : 20,    //每一个的间隙
           position : 'fixed', //绝对定位
           direction : 'bottom right', //方向
+          ismoseoverclose : true,  //悬浮是否停止
         })
 
 ## 开始弹幕方法
