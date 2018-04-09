@@ -51,35 +51,21 @@
 			}
 			Obj.data.push(str);
 
-			//setTimeout(function(){
-				if(M.barrageBox.children().length > settings.row){
+			if(M.barrageBox.children().length > settings.row){
 
-					M.barrageBox.children().eq(0).animate({
-						'opacity' : 0,
-					},300,function(){
-						$(this).css({
-							'margin' : 0,
-						}).remove();
-					})
-				}
-			//},(settings.time * settings.row))
+				M.barrageBox.children().eq(0).animate({
+					'opacity' : 0,
+				},300,function(){
+					$(this).css({
+						'margin' : 0,
+					}).remove();
+				})
+			}
 		}
-		Obj.close = function(){
-			M.barrageBox.remove();
-			clearInterval(M.timer);
-			M.timer = null;
-		}
-
-		Obj.start = function(){
-			if(M.timer) return;
-			_self.append(M.barrageBox); //把弹幕盒子放到页面中
-			createView(); //创建试图并开始动画
-			M.timer = setInterval(function(){ //循环
-				createView();
-			},settings.time)
+		M.mouseClose = function(){
 			settings.ismoseoverclose && (function(){
 
-				$('#barrage').mouseover(function(){
+				M.barrageBox.mouseover(function(){
 					clearInterval(M.timer);
 					M.timer = null;
 				}).mouseout(function(){
@@ -89,8 +75,22 @@
 				})
 
 			})()
-
 		}
+		Obj.close = function(){
+			M.barrageBox.remove();
+			clearInterval(M.timer);
+			M.timer = null;
+		}
+		Obj.start = function(){
+			if(M.timer) return;
+			_self.append(M.barrageBox); //把弹幕盒子放到页面中
+			createView(); //创建试图并开始动画
+			M.timer = setInterval(function(){ //循环
+				createView();
+			},settings.time)
+			M.mouseClose();
+		}
+		
 		return Obj;
 	}
 
