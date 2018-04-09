@@ -20,6 +20,7 @@
 			gap : 20,    //每一个的间隙
 			position : 'fixed', //绝对定位
 			direction : 'bottom right', //方向
+			ismoseoverclose : true, //悬浮是否停止
 		}
 
 		var settings = $.extend({},opts,opt); //合并参数
@@ -29,7 +30,7 @@
 		M.horizontal = settings.direction.split(/\s+/)[1]; //横向
 		M.bgColors = ['#edbccc','#edbce7','#c092e4','#9b92e4','#92bae4','#92d9e4','#92e4bc','#a9e492','#d9e492','#e4c892']; //随机背景色数组
 		Obj.arrEle = []; //预计存储dom集合数组
-		M.barrageBox = $('<div id="barrage" style="width:100%;position:'+settings.position+';'+M.vertical+':0;'+M.horizontal+':0;"></div>'); //存所有弹幕的盒子
+		M.barrageBox = $('<div id="barrage" style="max-width:100%;position:'+settings.position+';'+M.vertical+':0;'+M.horizontal+':0;"></div>'); //存所有弹幕的盒子
 		M.timer = null; 
 		var createView = function(){
 			var randomIndex = Math.floor(Math.random() * M.bgColors.length);
@@ -48,17 +49,20 @@
 				},1000)
 				M.barrageBox.append(ele);
 			}
-			
 			Obj.data.push(str);
-			setTimeout(function(){
-				ele.animate({
-					'opacity' : 0,
-				},300,function(){
-					$(this).css({
-						'margin' : 0,
-					}).remove();
-				})
-			},(settings.time * settings.row))
+
+			//setTimeout(function(){
+				if(M.barrageBox.children().length > settings.row){
+
+					M.barrageBox.children().eq(0).animate({
+						'opacity' : 0,
+					},300,function(){
+						$(this).css({
+							'margin' : 0,
+						}).remove();
+					})
+				}
+			//},(settings.time * settings.row))
 		}
 		Obj.close = function(){
 			M.barrageBox.remove();
@@ -73,6 +77,19 @@
 			M.timer = setInterval(function(){ //循环
 				createView();
 			},settings.time)
+			settings.ismoseoverclose && (function(){
+
+				$('#barrage').mouseover(function(){
+					clearInterval(M.timer);
+					M.timer = null;
+				}).mouseout(function(){
+					M.timer = setInterval(function(){ //循环
+						createView();
+					},settings.time)
+				})
+
+			})()
+
 		}
 		return Obj;
 	}
