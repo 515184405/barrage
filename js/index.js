@@ -21,6 +21,7 @@
 			position : 'fixed', //绝对定位
 			direction : 'bottom right', //方向
 			ismoseoverclose : true, //悬浮是否停止
+			height : 30,
 		}
 
 		var settings = $.extend({},opts,opt); //合并参数
@@ -34,18 +35,22 @@
 		M.timer = null; 
 		var createView = function(){
 			var randomIndex = Math.floor(Math.random() * M.bgColors.length);
-			var ele = $('<a class="overflow-text" target="_blank" style="opacity:0;text-align:'+settings.direction.split(/\s+/)[1]+';float:'+settings.direction.split(/\s+/)[1]+';background-color:'+M.bgColors[randomIndex]+'"; href="'+(Obj.data[0].href ? Obj.data[0].href : "javascript:;")+'">'+Obj.data[0].text+'</a>');
+			var ele = $('<a class="overflow-text" target="_blank" style="height:0;opacity:0;text-align:'+settings.direction.split(/\s+/)[1]+';float:'+settings.direction.split(/\s+/)[1]+';background-color:'+M.bgColors[randomIndex]+'"; href="'+(Obj.data[0].href ? Obj.data[0].href : "javascript:;")+'">'+Obj.data[0].text+'</a>');
 			var str = Obj.data.shift();
 			if(M.vertical  == 'top'){
 				ele.animate({
 					'opacity' : 1,
 					'margin-top' : settings.gap,
+					'height' : settings.height,
+					'line-height' : settings.height+'px',
 				},1000)
 				M.barrageBox.prepend(ele);
 			}else{
 				ele.animate({
 					'opacity' : 1,
 					'margin-bottom' : settings.gap,
+					'height' : settings.height,
+					'line-height' : settings.height+'px'
 				},1000)
 				M.barrageBox.append(ele);
 			}
